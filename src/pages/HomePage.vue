@@ -10,10 +10,10 @@
     <div class="row justify-space-between">
       <!-- <div class="col-4"> -->
       <div class="col-4 p-1" v-for="blogsData in state.blogs" :key="blogsData.id" :blogs="blogsData">
-        <div class="card">
+        <div class="card blog">
           <img :src="blogsData.creator ? blogsData.creator.picture: 'https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg'" class="card-img-top" alt="...">
           <div class="card-body">
-            <p>
+            <p class="card-title">
               Title: {{ blogsData.title }}
             </p>
             <p>
@@ -56,5 +56,15 @@ export default {
     height: 200px;
     width: 200px;
   }
+}
+
+.blog:hover {
+  transform: translateY(-5px);
+  box-shadow: 1px 3px 5px rgb(94, 94, 94);
+  cursor: pointer
+}
+.blog {
+  transition: all .2s;
+  color: black
 }
 </style>
