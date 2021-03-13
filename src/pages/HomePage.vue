@@ -39,6 +39,9 @@
       <!-- <div class="col-4"> -->
       <div class="col-4 p-1" v-for="blogsData in state.blogs" :key="blogsData.id" :blogs="blogsData">
         <div class="card blog">
+          <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
+            Delete Blog
+          </button>
           <img :src="blogsData.creator ? blogsData.creator.picture: 'https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg'" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-title">
@@ -65,7 +68,9 @@ export default {
   setup() {
     const state = reactive({
       blogs: computed(() => AppState.blogs),
-      newBlog: {}
+      newBlog: {},
+      activeBlogs: computed(() => AppState.activeBlog),
+      active: {}
     })
     onMounted(async() => {
       await blogService.getAllBlog()
@@ -77,6 +82,14 @@ export default {
         const blogId = await blogService.createBlog(state.newBlog)
         // router.push({ name: 'BlogDetails', params: { id: blogId } })
         state.newBlog = {}
+      },
+      async getBlog() {
+        await blogService.getBlog(state.blogs.id)
+      },
+      async deleteBlog() {
+        this.getBlog()
+        await blogService.deleteBlog(state.activeBlogs.id)
+        // router.push({ name: 'Blogs' })
       }
     }
   }

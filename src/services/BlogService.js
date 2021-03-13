@@ -22,6 +22,25 @@ class BlogService {
       console.error(error)
     }
   }
+
+  async getBlog(id) {
+    try {
+      const res = await api.get('api/blogs/' + id)
+      AppState.activeBlog = res.data
+      console.log(AppState.activeBlog)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async deleteBlog(id) {
+    try {
+      await api.delete(`api/blogs/${id}`)
+      this.getAllBlog()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 export const blogService = new BlogService()
