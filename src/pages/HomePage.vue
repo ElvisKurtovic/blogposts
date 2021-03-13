@@ -7,6 +7,34 @@
   </div> -->
 
   <div class="container-fluid">
+    <form class="form-inline" @submit.prevent="createBlog">
+      <div class="form-group">
+        <input
+          type="text"
+          name="title"
+          id="title"
+          class="form-control"
+          placeholder="Title"
+          aria-describedby="helpId"
+          v-model="state.newBlog.title"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="body"
+          id="body"
+          class="form-control"
+          placeholder="Body"
+          aria-describedby="helpId"
+          v-model="state.newBlog.body"
+        />
+      </div>
+
+      <button class="btn btn-info" type="submit">
+        Create
+      </button>
+    </form>
     <div class="row justify-space-between">
       <!-- <div class="col-4"> -->
       <div class="col-4 p-1" v-for="blogsData in state.blogs" :key="blogsData.id" :blogs="blogsData">
@@ -36,13 +64,20 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      blogs: computed(() => AppState.blogs)
+      blogs: computed(() => AppState.blogs),
+      newBlog: {}
     })
     onMounted(async() => {
       await blogService.getAllBlog()
     })
     return {
-      state
+      state,
+      async createBlog() {
+        // eslint-disable-next-line no-unused-vars
+        const blogId = await blogService.createBlog(state.newBlog)
+        // router.push({ name: 'BlogDetails', params: { id: blogId } })
+        state.newBlog = {}
+      }
     }
   }
 }
