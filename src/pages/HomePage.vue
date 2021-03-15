@@ -7,7 +7,7 @@
   </div> -->
 
   <div class="container-fluid">
-    <div class="col-6" v-if="state.user.isAuthenticated">
+    <div class="col-6 p-1" v-if="state.user.isAuthenticated">
       <form class="form-inline" @submit.prevent="createBlog">
         <div class="form-group">
           <input
