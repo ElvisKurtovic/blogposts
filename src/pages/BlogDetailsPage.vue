@@ -29,9 +29,9 @@
       </button>
     </form>
     <div class="card blog text-center justify-content-center">
-      <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
+      <!-- <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
         Delete Blog
-      </button>
+      </button> -->
       <img :src="state.blog.creator ? state.blog.creator.picture: 'https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg'" class="card-img-top" alt="...">
       <div class="card-body">
         <p class="card-title">
