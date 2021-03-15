@@ -11,13 +11,15 @@
             Author: {{ blogs.creator ? blogs.creator.email : 'Anonymous' }}
           </p>
         </div>
-        <!-- <div v-if="blog.creator.email == state.user.email"> -->
+      </div>
+    </router-link>
+    <div v-if="blogs.creator">
+      <div v-if="blogs.creator.email == state.user.email">
         <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
           Delete Blog
         </button>
-        <!-- </div> -->
       </div>
-    </router-link>
+    </div>
     <br>
   </div>
 </template>
@@ -26,6 +28,9 @@
 import { reactive } from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
 import { AppState } from '../AppState'
+import { blogService } from '../services/BlogService'
+import router from '../router'
+
 export default {
   name: 'Blog',
   props: {
@@ -37,7 +42,11 @@ export default {
     })
 
     return {
-      state
+      state,
+      async deleteBlog() {
+        await blogService.deleteBlog(state.blogs.id)
+        router.push({ name: 'Home' })
+      }
     }
   },
   components: {}

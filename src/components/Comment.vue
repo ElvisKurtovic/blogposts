@@ -1,9 +1,9 @@
 <template>
-  <div class="Comment">
+  <div class="Comment" v-if="comment.creator">
     <br>
     <p>{{ comment.body }}</p>
     <p>Author: {{ comment.creator.email }}</p>
-    <button type="button" class="btn btn-outline-danger" @click="deleteComment">
+    <button type="button" class="btn btn-outline-danger" v-if="comment.creator.email == state.user.email" @click="deleteComment">
       Delete Comment
     </button>
   </div>
