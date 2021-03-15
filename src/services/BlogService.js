@@ -27,7 +27,7 @@ class BlogService {
     try {
       const res = await api.get('api/blogs/' + id)
       AppState.activeBlog = res.data
-      console.log(AppState.activeBlog)
+      console.log(res.data)
     } catch (error) {
       console.error(error)
     }
@@ -37,6 +37,15 @@ class BlogService {
     try {
       await api.delete(`api/blogs/${id}`)
       this.getAllBlog()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async createComment(rawComment) {
+    try {
+      const res = await api.post('api/comments', rawComment)
+      AppState.comments.push(res.data)
     } catch (error) {
       console.error(error)
     }

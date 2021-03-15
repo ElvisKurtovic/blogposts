@@ -35,24 +35,12 @@
         Create
       </button>
     </form>
-    <div class="row justify-space-between">
+    <div class="row justify-space-between" v-if="!blogsData">
       <!-- <div class="col-4"> -->
-      <div class="col-4 p-1" v-for="blogsData in state.blogs" :key="blogsData.id" :blogs="blogsData">
-        <div class="card blog">
-          <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
-            Delete Blog
-          </button>
-          <img :src="blogsData.creator ? blogsData.creator.picture: 'https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg'" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">
-              Title: {{ blogsData.title }}
-            </p>
-            <p>
-              Author: {{ blogsData.creator ? blogsData.creator.email : 'Anonymous' }}
-            </p>
-          </div>
-        </div>
-      </div>
+      <!-- <div class="col-4 p-1" > -->
+      <Blog class="col-4" v-for="blogsData in state.blogs" :key="blogsData.id" :blogs="blogsData">
+      </blog>
+      <!-- </div> -->
       <!-- </div> -->
     </div>
   </div>
