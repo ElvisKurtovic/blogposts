@@ -1,5 +1,5 @@
 <template>
-  <div class="blogDetails">
+  <div class="blogDetails text-center">
     <form class="form-inline" @submit.prevent="createBlog">
       <div class="form-group">
         <input
@@ -28,7 +28,7 @@
         Create
       </button>
     </form>
-    <div class="card blog">
+    <div class="card blog text-center justify-content-center">
       <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
         Delete Blog
       </button>
@@ -37,10 +37,32 @@
         <p class="card-title">
           Title: {{ state.blog.title }}
         </p>
+        <p class="card-body">
+          Body: {{ state.blog.body }}
+        </p>
         <p>
           Author: {{ state.blog.creator ? state.blog.creator.email : 'Anonymous' }}
         </p>
       </div>
+      <h5>Comment Section:</h5>
+      <Comment v-for="commentData in state.comments" :key="commentData.id" :comment="commentData">
+      </comment>
+      <form class="form-inline" @submit.prevent="createComment">
+        <div class="form-group">
+          <input
+            type="text"
+            name="body"
+            id="body"
+            class="form-control"
+            placeholder="Comment"
+            aria-describedby="helpId"
+            v-model="state.newComment.body"
+          />
+        </div>
+        <button class="btn btn-info mt-1" type="submit" v-if="state.blog.creator">
+          Post Comment
+        </button>
+      </form>
     </div>
   </div>
 </template>
@@ -57,10 +79,14 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
-      blog: computed(() => AppState.activeBlog)
+      user: computed(() => AppState.user),
+      blog: computed(() => AppState.activeBlog),
+      comments: computed(() => AppState.comments),
+      newComment: {}
     })
-    onMounted(() => {
-      blogService.getBlog(route.params.id)
+    onMounted(async() => {
+      await blogService.getBlog(route.params.id)
+      await blogService.getComments(route.params.id)
     })
     onBeforeRouteLeave((to, from, next) => {
       if (window.confirm('You sure bro?')) {
@@ -73,6 +99,7 @@ export default {
       state,
       async createComment() {
         await blogService.createComment({ blog: state.blog.id, body: state.newComment.body })
+        state.newComment = {}
       },
       async deleteBlog() {
         await blogService.deleteBlog(state.blog.id)
@@ -85,5 +112,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.blog {
+  transition: all .2s;
+  color: black
+}
 </style>

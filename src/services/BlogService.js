@@ -42,10 +42,29 @@ class BlogService {
     }
   }
 
+  async getComments(id) {
+    try {
+      const res = await api.get(`api/blogs/${id}/comments`)
+      AppState.comments = res.data
+      console.log(res)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async createComment(rawComment) {
     try {
       const res = await api.post('api/comments', rawComment)
       AppState.comments.push(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async deleteComment(commentId, blogId) {
+    try {
+      await api.delete('api/comments/' + commentId)
+      this.getComments(blogId)
     } catch (error) {
       console.error(error)
     }

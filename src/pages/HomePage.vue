@@ -7,34 +7,36 @@
   </div> -->
 
   <div class="container-fluid">
-    <form class="form-inline" @submit.prevent="createBlog">
-      <div class="form-group">
-        <input
-          type="text"
-          name="title"
-          id="title"
-          class="form-control"
-          placeholder="Title"
-          aria-describedby="helpId"
-          v-model="state.newBlog.title"
-        />
-      </div>
-      <div class="form-group">
-        <input
-          type="text"
-          name="body"
-          id="body"
-          class="form-control"
-          placeholder="Body"
-          aria-describedby="helpId"
-          v-model="state.newBlog.body"
-        />
-      </div>
+    <div class="col-6" v-if="state.user.isAuthenticated">
+      <form class="form-inline" @submit.prevent="createBlog">
+        <div class="form-group">
+          <input
+            type="text"
+            name="title"
+            id="title"
+            class="form-control"
+            placeholder="Title"
+            aria-describedby="helpId"
+            v-model="state.newBlog.title"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="body"
+            id="body"
+            class="form-control"
+            placeholder="Body"
+            aria-describedby="helpId"
+            v-model="state.newBlog.body"
+          />
+        </div>
 
-      <button class="btn btn-info" type="submit">
-        Create
-      </button>
-    </form>
+        <button class="btn btn-info" type="submit">
+          Create
+        </button>
+      </form>
+    </div>
     <div class="row justify-space-between" v-if="!blogsData">
       <!-- <div class="col-4"> -->
       <!-- <div class="col-4 p-1" > -->
@@ -55,6 +57,7 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
+      user: computed(() => AppState.user),
       blogs: computed(() => AppState.blogs),
       newBlog: {},
       activeBlogs: computed(() => AppState.activeBlog),
@@ -92,15 +95,5 @@ export default {
     height: 200px;
     width: 200px;
   }
-}
-
-.blog:hover {
-  transform: translateY(-5px);
-  box-shadow: 1px 3px 5px rgb(94, 94, 94);
-  cursor: pointer
-}
-.blog {
-  transition: all .2s;
-  color: black
 }
 </style>

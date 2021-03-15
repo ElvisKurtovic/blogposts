@@ -1,10 +1,7 @@
 <template>
-  <div class="Blog">
+  <div class="Blog justify-content-center">
     <router-link :to="{ name: 'BlogDetailsPage', params: { id: blogs.id } }">
       <div class="card blog">
-        <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
-          Delete Blog
-        </button>
         <img :src="blogs.creator ? blogs.creator.picture: 'https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg'" class="card-img-top" alt="...">
         <div class="card-body">
           <p class="card-title">
@@ -14,8 +11,14 @@
             Author: {{ blogs.creator ? blogs.creator.email : 'Anonymous' }}
           </p>
         </div>
+        <!-- <div v-if="blog.creator.email == state.user.email"> -->
+        <button type="button" class="btn btn-outline-danger" @click="deleteBlog">
+          Delete Blog
+        </button>
+        <!-- </div> -->
       </div>
     </router-link>
+    <br>
   </div>
 </template>
 
@@ -42,5 +45,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.blog:hover {
+  transform: translateY(-5px);
+  box-shadow: 1px 3px 5px rgb(94, 94, 94);
+  cursor: pointer
+}
+.blog {
+  transition: all .2s;
+  color: black
+}
 </style>
