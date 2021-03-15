@@ -38,13 +38,14 @@ export default {
   },
   setup(props) {
     const state = reactive({
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      blog: computed(() => AppState.blogs)
     })
 
     return {
       state,
       async deleteBlog() {
-        await blogService.deleteBlog(state.blogs.id)
+        await blogService.deleteBlog(props.blogs.id)
         router.push({ name: 'Home' })
       }
     }
