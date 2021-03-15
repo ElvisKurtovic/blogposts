@@ -33,7 +33,7 @@
         </div>
 
         <button class="btn btn-info" type="submit">
-          Create
+          Create Blog
         </button>
       </form>
     </div>
